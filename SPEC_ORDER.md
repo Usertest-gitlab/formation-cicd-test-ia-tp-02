@@ -1,6 +1,6 @@
 # Spécification fonctionnelle — Gestion des commandes (Order)
 
-## 🎯 Objectif
+## Objectif
 
 Cette spécification décrit le comportement attendu pour la gestion d’une commande
 dans une application Java.
