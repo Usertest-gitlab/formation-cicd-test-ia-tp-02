@@ -1,0 +1,60 @@
+User [Class]
+	Email
+	Obligatoire (non null, non vide après trim)
+	Doit contenir exactement un seul caractère @
+	Doit contenir au moins un . après le @
+	=> email automatiquement trim() avant stockage
+
+	Password
+	Obligatoire (non null, non vide après trim)
+	Doit retourner true avec méthode PasswordPolicy.isStrong(password)
+		longueur = 8 caractères
+		au moins une majuscule
+		au moins une minuscule
+		au moins un chiffre
+		au moins un caractère spécial (tout caractère non lettre et non chiffre)
+	=> password jamais modifié
+
+	Role [Enum]
+	Obligatoire (non null)
+	Valeurs autorisées : USER, ADMIN
+	=> rôle stocké tel quel
+	canAccessAdminArea()
+	=> retourne true si admin, sinon false
+
+=> non respect des règles : IllegalArgumentException (avec message : "email must be valid","password must be strong", "role must not be null")
+=> UserService avec User register(String email, String password, Role role)
+créé l'utilisateur, le retourne, propage exceptions
+
+
+Tests :
+Email
+- null => IllegalArgumentException : email must not be null
+- vide => IllegalArgumentException : email must be valid
+- sans @ => IllegalArgumentException : email must be valid
+- avec plusieurs @ => IllegalArgumentException : email must be valid
+- vide avant @ => IllegalArgumentException : email must be valid
+- espace avant @ => IllegalArgumentException : email must be valid
+- . après @ vide avant @ => IllegalArgumentException : email must be valid
+- . après @ non vide avant @ => email valide
+Password
+- null => IllegalArgumentException : password must not be null
+- vide => IllegalArgumentException : password must be strong
+- moins 8 caractères => IllegalArgumentException : password must be strong
+- sans maj => IllegalArgumentException : password must be strong
+- sans min => IllegalArgumentException : password must be strong
+- sans chiffre => IllegalArgumentException : password must be strong
+- sans char spe => IllegalArgumentException : password must be strong
+- avec maj, min, chiffre, char spe et min 8 caractères => password valide
+
+Role
+- null => IllegalArgumentException : role must not be null
+- Role => IllegalArgumentException : role must be valid
+- User => role valide
+- Admin => role valide
+
+Méthodes 
+- canAccessAdminArea(Admin) = true, 
+- canAccessAdminArea(User) = false, 
+- canAccessAdminArea(Role) = false, 
+- canAccessAdminArea(null) = false
