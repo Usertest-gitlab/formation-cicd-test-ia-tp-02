@@ -38,7 +38,7 @@ Avant d’écrire la moindre ligne de code Java :
    - cas d’erreur
 4. Conseil : faites cette étape sans IA dans un premier temps.
 5. Utilisez une IA (ChatGPT, Copilot, etc.) pour proposer des cas de tests
-4. Comparez vos test identifier sans l'IA avec ceux générer par l'IA
+4. Comparez vos tests identifiés sans l'IA avec ceux généré par l'IA
 
 *Objectif : transformer une description métier en comportements testables.*
 

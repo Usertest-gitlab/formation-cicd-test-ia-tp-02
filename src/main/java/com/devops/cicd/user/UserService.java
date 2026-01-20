@@ -1,5 +1,7 @@
 package com.devops.cicd.user;
 
+import com.devops.cicd.PasswordPolicy;
+
 public class UserService {
 
     /**
@@ -11,7 +13,44 @@ public class UserService {
      * - propage les erreurs si les données sont invalides
      */
     public User register(String email, String password, Role role) {
-        // TODO: implémenter en s'appuyant sur User
-        return null;
+        // Validation role
+        if (role == null) {
+            throw new IllegalArgumentException("role must not be null");
+        }
+
+        // Validation email
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("email must be valid");
+        }
+
+        String trimmedEmail = email.trim();
+
+        if (!isValidEmail(trimmedEmail)) {
+            throw new IllegalArgumentException("email must be valid");
+        }
+
+        // Validation password
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("password must be strong");
+        }
+
+        if (!PasswordPolicy.isStrong(password)) {
+            throw new IllegalArgumentException("password must be strong");
+        }
+
+        return new User(email, password, role);
+    }
+    
+    private boolean isValidEmail(String email) {
+        int atIndex = email.indexOf('@');
+
+        // exactement un @
+        if (atIndex < 1 || atIndex != email.lastIndexOf('@')) {
+            return false;
+        }
+
+        // au moins un . après le @
+        String domainPart = email.substring(atIndex + 1);
+        return domainPart.contains(".");
     }
 }
